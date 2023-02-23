@@ -7,7 +7,9 @@
  - 
 
 ### To refactor:
- - 
+ - [] Create Room API
+ - [] Configure DB
+ - [] Connect socket to room
 
 
 -------------------------------------------

@@ -7,8 +7,6 @@ export class RoomController {
 
   @Get('generateID')
   async getRandomRoomID() {
-    console.log('did!');
-
     return this.roomService.generateRoomID();
   }
 }

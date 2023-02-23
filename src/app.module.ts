@@ -2,7 +2,10 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { config } from 'dotenv';
 import { AppGateway } from './app.gateway';
+import { Room } from './room/room.entity';
 import { RoomModule } from './room/room.module';
+import { ParticipantModule } from './participant/participant.module';
+import { Participant } from './participant/participant.entity';
 config();
 
 @Module({
@@ -14,10 +17,11 @@ config();
       username: process.env.USER_NAME,
       password: '',
       database: process.env.DB_NAME,
-      entities: [],
+      entities: [Room, Participant],
       synchronize: true,
     }),
     RoomModule,
+    ParticipantModule,
   ],
   controllers: [],
   providers: [AppGateway],

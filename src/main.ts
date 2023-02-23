@@ -5,6 +5,7 @@ config();
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.setGlobalPrefix('api');
 
   const serverPort = +process.env.SERVER_PORT;
   //const clientPort = 8080;
