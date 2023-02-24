@@ -5,9 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Room } from './room.entity';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Room]),
-  ],
+  imports: [TypeOrmModule.forFeature([Room])],
   providers: [RoomService],
   controllers: [RoomController],
 })

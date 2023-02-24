@@ -4,19 +4,24 @@ import {
   OnGatewayInit,
   WebSocketGateway,
 } from '@nestjs/websockets';
-import { WebSocketServer } from '@nestjs/websockets/decorators';
-import { Socket, Server, Namespace } from 'socket.io';
+import {
+  SubscribeMessage,
+  WebSocketServer,
+} from '@nestjs/websockets/decorators';
+import { Socket, Server } from 'socket.io';
+import { config } from 'dotenv';
+config();
 
-@WebSocketGateway(3001, {
+@WebSocketGateway(+process.env.GATEWAY_PORT, {
   cors: {
-    origin: ['http://localhost:8080'],
+    origin: [`http://localhost:${process.env.CLIENT_PORT}`],
   },
 })
 export class AppGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
 {
   @WebSocketServer()
-  io: Namespace;
+  io: Server;
 
   afterInit(server: Server) {
     console.log('Gateway Initialized.');
@@ -28,5 +33,15 @@ export class AppGateway
 
   handleDisconnect(client: Socket) {
     console.log('Disconnected socket: ' + client.id);
+  }
+
+  @SubscribeMessage('joinRoom')
+  async handleJoinRoom(
+    client: Socket,
+    data: { roomCode: string; username: string },
+  ) {
+    if (Array.from(client.rooms).indexOf(data.roomCode) < 0) {
+      client.join(data.roomCode);
+    }
   }
 }

@@ -18,24 +18,19 @@ export class RoomService {
   }
 
   async findOneByID(id: string): Promise<Room> {
-    return this.roomRepository.findOneBy({id});
+    return this.roomRepository.findOneBy({ id });
+  }
+
+  async findOneByCode(code: number): Promise<Room> {
+    return this.roomRepository.findOneBy({ code });
   }
 
   async create(code: number): Promise<Room> {
-    const existingRoom = await this.roomRepository.findOneBy({code});
-
-    if(existingRoom) {
-      const {id} = await this.findOneByID(existingRoom.id);
-      this.roomRepository.update({id}, {code: existingRoom.code});
-      return {
-        id,
-        code: existingRoom.code
-      } as Room;
-    }
-
     const room = new Room();
     room.code = code;
 
-    return room;
+    return this.roomRepository.save(room);
   }
+
+  async isRoomExists() {}
 }

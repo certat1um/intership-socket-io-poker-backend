@@ -14,6 +14,6 @@ export class Participant {
   @Column()
   points: number;
 
-  @ManyToOne(room => Room, room => room.id)
+  @ManyToOne((room) => Room, (room) => room.id)
   room: Room;
 }

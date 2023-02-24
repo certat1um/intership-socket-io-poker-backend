@@ -8,14 +8,14 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
 
   const serverPort = +process.env.SERVER_PORT;
-  //const clientPort = 8080;
+  const clientPort = process.env.CLIENT_PORT;
 
-  //app.enableCors({
-  //  origin: [
-  //    `http://localhost:${clientPort}`,
-  //    new RegExp(`/^http:\/\/192\.168\.1\.([1-9]|[1-9]\d):${clientPort}$/`),
-  //  ],
-  //});
+  app.enableCors({
+    origin: [
+      `http://localhost:${clientPort}`,
+      new RegExp(`/^http:\/\/192\.168\.1\.([1-9]|[1-9]\d):${clientPort}$/`),
+    ],
+  });
 
   await app.listen(serverPort, () => {
     console.log(`Server is running on port ${serverPort}...`);
