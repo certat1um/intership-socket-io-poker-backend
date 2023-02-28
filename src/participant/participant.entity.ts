@@ -1,5 +1,7 @@
+import { Card } from 'src/card/card.entity';
 import { Room } from 'src/room/room.entity';
-import { Entity, ManyToOne } from 'typeorm';
+import { User } from 'src/user/user.entity';
+import { Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { Column } from 'typeorm/decorator/columns/Column';
 import { PrimaryGeneratedColumn } from 'typeorm/decorator/columns/PrimaryGeneratedColumn';
 
@@ -8,12 +10,12 @@ export class Participant {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
-  username: string;
+  @ManyToOne((point) => User, (user) => user.id, { nullable: false })
+  user: User | string;
 
-  @Column()
-  points: number;
+  @ManyToOne((point) => Card, (card) => card.id)
+  activeCard: Card;
 
-  @ManyToOne((room) => Room, (room) => room.id)
-  room: Room;
+  @ManyToOne((room) => Room, (room) => room.id, { nullable: false })
+  room: Room | string;
 }

@@ -6,8 +6,10 @@ import { Room } from './room/room.entity';
 import { RoomModule } from './room/room.module';
 import { ParticipantModule } from './participant/participant.module';
 import { Participant } from './participant/participant.entity';
-import { PointCardModule } from './point-card/point-card.module';
-import { PointCard } from './point-card/point-card.entity';
+import { CardModule } from './card/card.module';
+import { Card } from './card/card.entity';
+import { UserModule } from './user/user.module';
+import { User } from './user/user.entity';
 config();
 
 @Module({
@@ -19,12 +21,13 @@ config();
       username: process.env.USER_NAME,
       password: '',
       database: process.env.DB_NAME,
-      entities: [Room, Participant, PointCard],
+      entities: [Room, Participant, Card, User],
       synchronize: true,
     }),
     RoomModule,
     ParticipantModule,
-    PointCardModule,
+    CardModule,
+    UserModule,
   ],
   controllers: [],
   providers: [AppGateway],

@@ -8,5 +8,5 @@ export class Room {
   id: string;
 
   @Column({ unique: true })
-  code: number;
+  code: string;
 }
