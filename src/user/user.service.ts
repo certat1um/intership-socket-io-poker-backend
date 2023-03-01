@@ -1,4 +1,5 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, forwardRef } from '@nestjs/common';
+import { Inject } from '@nestjs/common/decorators';
 import { InjectRepository } from '@nestjs/typeorm';
 import { RoomService } from 'src/room/room.service';
 import { Repository } from 'typeorm';
@@ -9,14 +10,14 @@ export class UserService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
+    @Inject(forwardRef(() => RoomService))
     private roomService: RoomService,
   ) {}
 
-  async getRoomByUserID(userID: string): Promise<string | null> {
-    const { createdRoom } = await this.userRepository.findOneBy({ id: userID });
-
-    if (createdRoom) {
-      const { id } = await this.roomService.findOneByID(createdRoom.toString());
+  async getRoomIDByUserID(userID: string): Promise<string | null | any> {
+    const { createdRoom: createdRoomID } = await this.userRepository.findOneBy({ id: userID });
+    if (createdRoomID) {
+      const { id } = await this.roomService.findOneByID(createdRoomID.toString());
       return id;
     }
     return null;

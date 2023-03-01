@@ -6,8 +6,8 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @Get('getUserRoom/:userID')
-  async handleUserRoom(@Param() userID: string): Promise<string | null> {
-    return this.userService.getRoomByUserID(userID);
+  async handleUserRoom(@Param() params: {userID: string}): Promise<string | null> {
+    return this.userService.getRoomIDByUserID(params.userID);
   }
 
   @Post('new-user')

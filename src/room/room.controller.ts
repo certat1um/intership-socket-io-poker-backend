@@ -1,25 +1,14 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { UserService } from 'src/user/user.service';
-import { Room } from './room.entity';
+import { Inject } from '@nestjs/common/decorators';
 import { RoomService } from './room.service';
 
 @Controller()
 export class RoomController {
-  constructor(
-    private roomService: RoomService,
-    private userService: UserService,
-  ) {}
+  constructor(private roomService: RoomService) {}
 
   @Post('new-room')
-  async handleCreatingRoom(@Body() body: { userID: string }) {
-    // generate roomCode
-    const roomCode = await this.roomService.generateRoomCode();
-
-    // create room
-    const { id: roomID } = await this.roomService.create(roomCode);
-
-    // update user data by updating createdRoomID
-    return this.userService.addRoomToUser(roomID, body.userID);
+  async handleCreatingRoom(@Body() body: { userID: string }): Promise<string | null> {
+    return this.roomService.createAndUpdateUserData(body.userID);
   }
 
   @Get('existing-room/:roomCode')

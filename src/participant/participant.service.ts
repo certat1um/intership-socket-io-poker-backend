@@ -1,7 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, forwardRef } from '@nestjs/common';
+import { Inject } from '@nestjs/common/decorators';
 import { InjectRepository } from '@nestjs/typeorm';
-import { RoomController } from 'src/room/room.controller';
-import { Room } from 'src/room/room.entity';
 import { RoomService } from 'src/room/room.service';
 import { Repository } from 'typeorm';
 import { Participant } from './participant.entity';
@@ -11,6 +10,7 @@ export class ParticipantService {
   constructor(
     @InjectRepository(Participant)
     private participantRepository: Repository<Participant>,
+    @Inject(forwardRef(() => RoomService))
     private roomService: RoomService,
   ) {}
 

@@ -10,12 +10,12 @@ export class Participant {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne((point) => User, (user) => user.id, { nullable: false })
+  @ManyToOne((type) => User, (user) => user.id, { nullable: false })
   user: User | string;
 
-  @ManyToOne((point) => Card, (card) => card.id)
+  @ManyToOne((type) => Card, (card) => card.id)
   activeCard: Card;
 
-  @ManyToOne((room) => Room, (room) => room.id, { nullable: false })
+  @ManyToOne((type) => Room, (room) => room.id, { nullable: false })
   room: Room | string;
 }

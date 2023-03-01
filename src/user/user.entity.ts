@@ -1,5 +1,11 @@
 import { Room } from 'src/room/room.entity';
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity('users')
 export class User {
@@ -10,5 +16,6 @@ export class User {
   username: string;
 
   @OneToOne((type) => Room, (room) => room.id, { nullable: true })
+  @JoinColumn()
   createdRoom: Room | string;
 }
